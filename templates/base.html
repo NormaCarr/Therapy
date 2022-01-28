@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/lumen/bootstrap.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <!--class="navbar navbar-toggleable-md navbar-light bg-faded"-->
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="/" class="navbar-brand">
+                    <img src="/static/logo.png" width="50" height="50" alt="logo">
+                    <span>Therapist Group</span>
+                </a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                {% if not g.user %}
+                <li><a href="/signup">Create an account&ensp;&ensp;</a></li>
+                <li><a href="/login">Log in</a></li>
+                {% else %}
+                <li>
+                    <a href="/users/{{ g.user.id }}">{{g.user.first_name}} {{g.user.last_name}}&ensp;&ensp;</a></li>
+
+                <li class="nav-justified"><a href="/logout">Log out</a></li>
+                {% endif %}
+
+
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        {% block content %} {% endblock %}
+    </div>
+
+</body>
+
+</html>
