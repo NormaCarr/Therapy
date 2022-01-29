@@ -18,6 +18,7 @@ class Therapist(db.Model):
                    autoincrement=True)
     userID =db.Column(db.Integer,
                  db.ForeignKey('users.loginID'),nullable =False,)
+                 #Column(Integer, ForeignKey(Node.nid), primary_key=True)
     first_name = db.Column(db.String(30), 
                          nullable=False)
     last_name = db.Column(db.String(30), 

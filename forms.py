@@ -12,8 +12,12 @@ class UserAddForm(FlaskForm):
     address = StringField('Address',validators=[DataRequired()])
 
 class TherapistAddForm(FlaskForm):
-    """Form for adding therapist."""
-
+    """Form for therapist information."""
+    first_name = StringField('First_name', validators=[DataRequired()])
+    last_name = StringField('Last_name', validators=[DataRequired()])
+    email = StringField('E-mail', validators=[DataRequired(), Email()])
+    phone = StringField('Phone',validators=[DataRequired()])
+    address = StringField('Address',validators=[DataRequired()])
     speciality = StringField('Speciality', validators=[DataRequired()]) 
 
 

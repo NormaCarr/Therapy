@@ -28,14 +28,14 @@ db.create_all()
 
 
 ##############################################################################
-# 
+#          Basic operations for all users Login, Logout, Sign up. 
 
 @app.before_request
 def add_user_to_g():
     """If we're logged in, add curr user to Flask global."""
 
     if CURR_USER_KEY in session:
-        g.user = Patient.query.get(session[CURR_USER_KEY])
+        g.user = User.query.get(session[CURR_USER_KEY])
 
     else:
         g.user = None
@@ -75,6 +75,12 @@ def login():
 
     return render_template('/login.html', form=form)
 
+@app.route('/logout')
+def logout():
+   """Handle logout of user."""
+   do_logout()
+   return redirect("/")
+
 
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
@@ -103,17 +109,17 @@ def signup():
             return render_template('/signup.html', form=form)
         
         do_login(user)
-        return redirect(f'/patientInfo/{user.loginID}')
+        return redirect(f'/patient/patientInfo/{user.loginID}')
     return render_template('/signup.html', form=form)
 
 
-@app.route('/patientInfo/<int:user_id>', methods=["GET", "POST"])
+#################### Patient ##################################
+
+@app.route('/patient/patientInfo/<int:user_id>', methods=["GET", "POST"])
 def patientInfo(user_id):
     "Form to fill patient's information"
-
-    
-    form=PatientAddForm()
-    
+   
+    form=PatientAddForm()    
     if user_id != session[CURR_USER_KEY]:
         flash("Access unauthorized.", "danger")
         return redirect("/")
@@ -126,15 +132,16 @@ def patientInfo(user_id):
                          address = form.address.data,)
             db.session.add(user)
             db.session.commit()
-            return redirect(f"/showpatient/{user.patientID}")
+            return redirect(f"/patient/showPatient/{user.userID}")
          except IntegrityError:
             #db.session.rollback()
             flash("Email related to another account", 'danger')    
-            return render_template('/patientInfo.html',form=form) 
+            return render_template('/patient/patientInfo.html',form=form) 
     
-    return render_template('/patientInfo.html',form=form)
+    return render_template('/patient/patientInfo.html',form=form)
     
-@app.route('/showpatient/<int:user_id>')
+
+@app.route('/patient/showPatient/<int:user_id>')
 def show_patient_inf(user_id):
        
     if user_id != session[CURR_USER_KEY]:
@@ -142,17 +149,101 @@ def show_patient_inf(user_id):
         return redirect("/")
     
     user = Patient.query.get_or_404(user_id)
-    form=PatientAddForm() 
-    form.first_name.data = user.first_name
-    form.last_name.data = user.last_name
-    form.email.data = user.email
-    form.phone.data = user.phone
-    form.address.data = user.address 
-    return render_template('/showpatient.html', form=form)
+    form=PatientAddForm(obj=user) 
+    
+    return render_template('/patient/showPatient.html', form=form)
+
+@app.route('/patient/editPatient/<int:user_id>',methods=["GET","POST"])
+def edit_patient(user_id):
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+    user = Patient.query.filter_by(patientID=user_id).first_or_404()
+   
+    form=PatientAddForm(obj=user)
+
+    if form.validate_on_submit():
+         try:
+            user.first_name = form.first_name.data
+            user.last_name = form.last_name.data
+            user.email = form.email.data
+            user.phone = form.phone.data
+            user.address = form.address.data
+            
+            db.session.commit()
+            return redirect(f"/patient/showPatient/{user.patientID}")
+         except IntegrityError:
+            #db.session.rollback()
+            flash("Email related to another account", 'danger')    
+            return render_template('/patient/editPatient.html',form=form) 
+    
+    return render_template('/patient/editPatient.html',form=form)
 
 
-@app.route('/logout')
-def logout():
-   """Handle logout of user."""
-   do_logout()
-   return redirect("/")
+#####################  Therapist ######################################
+
+@app.route('/therapist/therapistInfo/<int:user_id>', methods=["GET", "POST"])
+def therapistInfo(user_id):
+    "Form to fill tharapist's information"
+   
+    form=TherapistAddForm()    
+    if user_id != session[CURR_USER_KEY]:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+    if form.validate_on_submit():
+         try:
+            user=Therapist(userID=user_id,first_name = form.first_name.data,
+                         last_name = form.last_name.data,
+                         email = form.email.data,
+                         phone = form.phone.data,
+                         address = form.address.data,
+                         speciality=form.speciality.data)
+            db.session.add(user)
+            db.session.commit()
+            return redirect(f"/therapist/showTherapist/{user_id}")
+         except IntegrityError:
+            #db.session.rollback()
+            flash("Email related to another account", 'danger')    
+            return render_template('/therapist/therapistInfo.html',form=form) 
+    
+    return render_template('/therapist/therapistInfo.html',form=form)
+
+@app.route('/therapist/showTherapist/<int:user_id>')
+def show_therapist_inf(user_id):
+       
+    if user_id != session[CURR_USER_KEY]:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+    
+    user = Therapist.query.filter_by(userID=user_id).first_or_404()
+    form=TherapistAddForm(obj=user) 
+    
+    return render_template('/therapist/showTherapist.html', form=form)
+
+@app.route('/therapist/editTherapist/<int:user_id>',methods=["GET","POST"])
+def edit_therapist(user_id):
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+    user = Therapist.query.filter_by(userID=user_id).first_or_404()
+   
+    form=TherapistAddForm(obj=user)
+
+    if form.validate_on_submit():
+         try:
+            user.first_name = form.first_name.data
+            user.last_name = form.last_name.data
+            user.email = form.email.data
+            user.phone = form.phone.data
+            user.address = form.address.data
+            
+            db.session.commit()
+            return redirect(f"/therapist/showTherapist/{user.userID}")
+         except IntegrityError:
+            #db.session.rollback()
+            flash("Email related to another account", 'danger')    
+            return render_template('/therapist/editTherapist.html',form=form) 
+    
+    return render_template('/therapist/editTherapist.html',form=form)

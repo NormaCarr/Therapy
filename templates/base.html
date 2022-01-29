@@ -26,7 +26,7 @@
                 <li><a href="/login">Log in</a></li>
                 {% else %}
                 <li>
-                    <a href="/users/{{ g.user.id }}">{{g.user.first_name}} {{g.user.last_name}}&ensp;&ensp;</a></li>
+                    <a href="/patient/showPatient/{{ g.user.userID }}">{{g.user.first_name}} {{g.user.last_name}}&ensp;&ensp;</a></li>
 
                 <li class="nav-justified"><a href="/logout">Log out</a></li>
                 {% endif %}
