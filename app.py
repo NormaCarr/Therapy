@@ -43,7 +43,7 @@ def add_user_to_g():
 def do_login(user):
     """Log in user."""
 
-    session[CURR_USER_KEY] = user.loginID
+    session[CURR_USER_KEY] = user.userID
 
 def do_logout():
     """Logout user."""
@@ -51,9 +51,19 @@ def do_logout():
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
 
-@app.route('/')
-def home_page():
-    return render_template('base.html')
+def verifyAccount(user):
+    """Verify is the account is from a patient or therapist"""
+    if Therapist.query.get(user.userID):
+      return "therapist"
+    return "patient"
+
+@app.route('/therapist')
+def home_page_therapist():
+    return render_template('/therapist/therapistHome.html')
+
+@app.route('/patient')
+def home_page_patient():
+    return render_template('/patient/patientHome.html')
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -68,8 +78,9 @@ def login():
 
         if user:
             do_login(user)
-            flash(f"Hello, {user.username}!", "success")
-            return redirect("/")
+            
+            account=verifyAccount(user)
+            return redirect(f"/{account}")
 
         flash("Invalid credentials.", 'danger')
 
@@ -78,13 +89,18 @@ def login():
 @app.route('/logout')
 def logout():
    """Handle logout of user."""
+   user=g.user
+   account=verifyAccount(user)
    do_logout()
-   return redirect("/")
+   return redirect(f"/{account}")
+   
 
+  
+#################### Patient ##################################
 
-@app.route('/signup', methods=["GET", "POST"])
-def signup():
-    """Handle user signup.
+@app.route('/patient/signup', methods=["GET", "POST"])
+def signupPatient():
+    """Handle patient signup.
 
     Create new user patient and add to DB. Redirect to home page.
 
@@ -109,11 +125,9 @@ def signup():
             return render_template('/signup.html', form=form)
         
         do_login(user)
-        return redirect(f'/patient/patientInfo/{user.loginID}')
+        return redirect(f"/patient/patientInfo/{user.userID}")
     return render_template('/signup.html', form=form)
 
-
-#################### Patient ##################################
 
 @app.route('/patient/patientInfo/<int:user_id>', methods=["GET", "POST"])
 def patientInfo(user_id):
@@ -125,14 +139,14 @@ def patientInfo(user_id):
         return redirect("/")
     if form.validate_on_submit():
          try:
-            user=Patient(userID=user_id,first_name = form.first_name.data,
+            user=Patient(patientID=user_id,first_name = form.first_name.data,
                          last_name = form.last_name.data,
                          email = form.email.data,
                          phone = form.phone.data,
                          address = form.address.data,)
             db.session.add(user)
             db.session.commit()
-            return redirect(f"/patient/showPatient/{user.userID}")
+            return redirect(f"/patient/showPatient/{user.patientID}")
          except IntegrityError:
             #db.session.rollback()
             flash("Email related to another account", 'danger')    
@@ -149,7 +163,8 @@ def show_patient_inf(user_id):
         return redirect("/")
     
     user = Patient.query.get_or_404(user_id)
-    form=PatientAddForm(obj=user) 
+    if user:
+       form=PatientAddForm(obj=user) 
     
     return render_template('/patient/showPatient.html', form=form)
 
@@ -158,7 +173,7 @@ def edit_patient(user_id):
 
     if not g.user:
         flash("Access unauthorized.", "danger")
-        return redirect("/")
+        return redirect("/patient")
     user = Patient.query.filter_by(patientID=user_id).first_or_404()
    
     form=PatientAddForm(obj=user)
@@ -183,6 +198,37 @@ def edit_patient(user_id):
 
 #####################  Therapist ######################################
 
+@app.route('/therapist/signup', methods=["GET", "POST"])
+def signuptherapist():
+    """Handle therapist signup.
+
+    Create new user therapist and add to DB. Redirect to home page.
+
+    If form not valid, present form.
+
+    If the there already is a user with that username: flash message
+    and re-present form.
+    """
+
+    form = SignupAddForm()
+    
+    if form.validate_on_submit():
+        try:
+            user = User.signup(
+                username=form.username.data,
+                password=form.password.data)
+            db.session.commit() 
+            
+        except IntegrityError:
+            #db.session.rollback()
+            flash("Username already taken", 'danger')
+            return render_template('/signup.html', form=form)
+        
+        do_login(user)
+        return redirect(f"/therapist/therapistInfo/{user.userID}")
+    return render_template('/signup.html', form=form)
+
+
 @app.route('/therapist/therapistInfo/<int:user_id>', methods=["GET", "POST"])
 def therapistInfo(user_id):
     "Form to fill tharapist's information"
@@ -190,10 +236,10 @@ def therapistInfo(user_id):
     form=TherapistAddForm()    
     if user_id != session[CURR_USER_KEY]:
         flash("Access unauthorized.", "danger")
-        return redirect("/")
+        return redirect("/therapist")
     if form.validate_on_submit():
          try:
-            user=Therapist(userID=user_id,first_name = form.first_name.data,
+            user=Therapist(therapistID=user_id,first_name = form.first_name.data,
                          last_name = form.last_name.data,
                          email = form.email.data,
                          phone = form.phone.data,
@@ -214,9 +260,9 @@ def show_therapist_inf(user_id):
        
     if user_id != session[CURR_USER_KEY]:
         flash("Access unauthorized.", "danger")
-        return redirect("/")
+        return redirect("/therapist")
     
-    user = Therapist.query.filter_by(userID=user_id).first_or_404()
+    user = Therapist.query.filter_by(therapistID=user_id).first_or_404()
     form=TherapistAddForm(obj=user) 
     
     return render_template('/therapist/showTherapist.html', form=form)
@@ -226,8 +272,8 @@ def edit_therapist(user_id):
 
     if not g.user:
         flash("Access unauthorized.", "danger")
-        return redirect("/")
-    user = Therapist.query.filter_by(userID=user_id).first_or_404()
+        return redirect("/therapist")
+    user = Therapist.query.filter_by(therapistID=user_id).first_or_404()
    
     form=TherapistAddForm(obj=user)
 
@@ -240,7 +286,7 @@ def edit_therapist(user_id):
             user.address = form.address.data
             
             db.session.commit()
-            return redirect(f"/therapist/showTherapist/{user.userID}")
+            return redirect(f"/therapist/showTherapist/{user.therapistID}")
          except IntegrityError:
             #db.session.rollback()
             flash("Email related to another account", 'danger')    

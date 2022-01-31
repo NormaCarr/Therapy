@@ -13,12 +13,7 @@ class Therapist(db.Model):
     """Therapist."""
     __tablename__ = "therapists"
 
-    therapistID = db.Column(db.Integer,
-                   primary_key=True,
-                   autoincrement=True)
-    userID =db.Column(db.Integer,
-                 db.ForeignKey('users.loginID'),nullable =False,)
-                 #Column(Integer, ForeignKey(Node.nid), primary_key=True)
+    therapistID = db.Column(db.Integer,primary_key=True,nullable =False,)            
     first_name = db.Column(db.String(30), 
                          nullable=False)
     last_name = db.Column(db.String(30), 
@@ -38,11 +33,7 @@ class Patient(db.Model):
     """Patient."""
     __tablename__ = "patients"
 
-    patientID = db.Column(db.Integer,
-                   primary_key=True,
-                   autoincrement=True)
-    userID = db.Column(db.Integer,
-                   db.ForeignKey('users.loginID'),nullable =False,)
+    patientID = db.Column(db.Integer,primary_key=True,nullable =False,)
     first_name = db.Column(db.String(30), 
                          nullable=False)
     last_name = db.Column(db.String(30), 
@@ -59,7 +50,7 @@ class Patient(db.Model):
 class User(db.Model):
     """Users."""
     __tablename__ = "users"
-    loginID = db.Column(db.Integer,
+    userID = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
     username = db.Column(db.String(20),
