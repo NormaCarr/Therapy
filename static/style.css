@@ -2,6 +2,11 @@ body {
     background-color: #1cf5f5;
 }
 
-a {
+p {
     color: azure;
+}
+
+a {
+    color: aliceblue;
+    font-size: large;
 }
