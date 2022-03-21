@@ -22,13 +22,21 @@ app.route('/')
 Thetapist
 
 /therapist/therapistHome.html
+
 /therapist/signup',methods=["GET","POST"]
+
 /therapist/availability',methods=["GET","POST"]
+
 /therapist/therapistInfo/<int:user_id>',methods=["GET","POST"]
+
 /therapist/showTherapist/<int:user_id>
+
 /therapist/editTherapist/<int:user_id>',methods=["GET","POST"]
+
 /therapist/patientList
+
 /therapist/appoint/<int:patient_id>
+
 /therapist/patientInf/<int:patient_id>
 
 
