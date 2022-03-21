@@ -16,6 +16,7 @@ app.route('/')
     ('/base.html')
 
 /login', methods=["GET","POST"]
+
 /logout
 
 
@@ -43,22 +44,31 @@ Thetapist
 Patient
 
 /patient/patientHome.html
+
 /patient/signup',methods=["GET","POST"]
+
 /patient/patientInfo/<int:user_id>',methods=["GET","POST"]
+
 /patient/editPatient/<int:user_id>',methods=["GET","POST"]
+
 /patient/showPatient<int:user_id>
 
 
 Shedule
 
 /patient/appoint
+
 /patient/editAppoint
+
 /patient/cancelAppoint
+
 /patient/appointment',methods=["GET","POST"]
 
 
 Payment
 
 /patient/account
+
 /patient/listPayments
+
 /patient/payment', methods=["GET","POST"]
