@@ -10,7 +10,7 @@ To get this application running, make sure you do the following in the Terminal:
 5. `flask run`
 
 
-Routes
+------------- Routes
 
 app.route('/')  
     ('/base.html')
@@ -21,7 +21,7 @@ app.route('/')
 
 
 
-Thetapist
+--------------- Thetapist
 
 /therapist/therapistHome.html
 
@@ -43,7 +43,7 @@ Thetapist
 
 
 
-Patient
+--------------  Patient
 
 /patient/patientHome.html
 
@@ -57,7 +57,7 @@ Patient
 
 
 
-Shedule
+---------------- Shedule
 
 /patient/appoint
 
@@ -69,7 +69,7 @@ Shedule
 
 
 
-Payment
+--------------- Payment
 
 /patient/account
 
