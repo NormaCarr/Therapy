@@ -20,6 +20,7 @@ app.route('/')
 /logout
 
 
+
 Thetapist
 
 /therapist/therapistHome.html
@@ -41,6 +42,7 @@ Thetapist
 /therapist/patientInf/<int:patient_id>
 
 
+
 Patient
 
 /patient/patientHome.html
@@ -54,6 +56,7 @@ Patient
 /patient/showPatient<int:user_id>
 
 
+
 Shedule
 
 /patient/appoint
@@ -63,6 +66,7 @@ Shedule
 /patient/cancelAppoint
 
 /patient/appointment',methods=["GET","POST"]
+
 
 
 Payment
