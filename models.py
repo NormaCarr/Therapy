@@ -1,10 +1,7 @@
 """Models for Therapist app."""
-from datetime import datetime
-
-from flask_bcrypt import Bcrypt
-from pickle import TRUE
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import backref
+from sqlalchemy.orm import backref,relationship
+from flask_bcrypt import Bcrypt
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -22,11 +19,32 @@ class Therapist(db.Model):
     phone = db.Column(db.String(40),
                      nullable=False,
                      unique=False)
-    email = db.Column(db.String(50), 
-                         nullable=False,unique=TRUE)
     speciality = db.Column(db.String(40),
                      nullable=False,
                      unique=False)
+    startDay = db.Column(db.String(9),)
+    endDay = db.Column(db.String(9),)
+    startTime = db.Column(db.String(8),)
+    endTime = db.Column(db.String(8),)
+    schedules = relationship("Schedule", back_populates="therapist")
+    
+    def to_dict(self):
+        """Serialize Therapist to a dict of therapist info."""
+
+        return {
+            
+            "Firs_name": self.first_name,
+            "Last_name": self.last_name,
+            "Address": self.address,
+            "Phone": self.phone,
+            
+            "speciality" : self.speciality,
+            "Start_day" : self.startDay,
+            "End_day" : self.endDay,
+            "Start_time" : self.startTime,
+            "End_time" : self.endTime,
+        }
+    
     
 
 class Patient(db.Model):
@@ -42,9 +60,21 @@ class Patient(db.Model):
     phone = db.Column(db.String(40),
                      nullable=False,
                      unique=False)
-    email = db.Column(db.String(50), 
-                         nullable=False,unique=TRUE)
-    
+    payment= db.relationship('Payment',cascade='all,delete',backref='patients')
+    schedule=db.relationship('Schedule',cascade='all,delete',backref='patients')
+    schedules = db.relationship("Schedule", back_populates="patient")
+   
+    def to_dict(self):
+        """Serialize Patient to a dict of patient info."""
+
+        return {
+            
+            "Firs_name": self.first_name,
+            "Last_name": self.last_name,
+            "Address": self.address,
+            "Phone": self.phone,
+            
+        }
     
 
 class User(db.Model):
@@ -52,8 +82,8 @@ class User(db.Model):
     __tablename__ = "users"
     userID = db.Column(db.Integer,
                    primary_key=True,
-                   autoincrement=True)
-    username = db.Column(db.String(20),
+                   autoincrement=True)               
+    username = db.Column(db.Text,
                         nullable=False,unique=True,)
     password = db.Column(db.Text, 
                         nullable=False)
@@ -95,20 +125,21 @@ class User(db.Model):
 
         return False
 
-class Session(db.Model):
-    """Session."""
+
+"""class Session(db.Model):
+    ""Session.""
     __tablename__ = "sessions"
 
     sessionID = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    paymentID = db.Column(db.Integer,
-                   db.ForeignKey('payments.paymentID'),nullable =False,)
+    
     calendarID = db.Column(db.Integer,
                    db.ForeignKey('calendars.calendarID'),nullable =False,)
     status = db.Column(db.String(40),
                      nullable=False,
                      unique=False)
+   """                  
     
 
 class Schedule(db.Model):
@@ -117,17 +148,21 @@ class Schedule(db.Model):
 
     scheduleID = db.Column(db.Integer,
                    primary_key=True,
-                   autoincrement=True)
-    therapistID = db.Column(db.Integer,
-                   db.ForeignKey('therapists.therapistID'),nullable =False,)
+                   autoincrement=True)              
     patientID = db.Column(db.Integer,
                    db.ForeignKey('patients.patientID'),nullable =False,)
-    sessionID = db.Column(db.Integer,
-                   db.ForeignKey('sessions.sessionID'),nullable =False,)
-    date =db.Column(db.DateTime,nullable =False,) 
+    therapistID = db.Column(db.Integer,
+                   db.ForeignKey('therapists.therapistID'),nullable =False,)
+    day =db.Column(db.String(11), nullable = False,) 
+    time = db.Column(db.String(5),nullable = False,)
+    frequency = db.Column(db.String(20)) 
     status = db.Column(db.String(40),
                      nullable=False,
                      unique=False)
+    comments = db.Column(db.Text, 
+                        nullable=True)
+    patient = db.relationship("Patient", back_populates="schedules")
+    therapist = db.relationship("Therapist", back_populates="schedules")
     
 class Payment(db.Model):
     """Payment."""
@@ -136,7 +171,9 @@ class Payment(db.Model):
     paymentID = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    amount = db.Column(db.Float,
+    patientID =   db.Column(db.Integer,
+                   db.ForeignKey('patients.patientID'),unique=False,  nullable =False,)            
+    amount = db.Column(db.Integer,
                      nullable=False,
                      unique=False)
     date =db.Column(db.DateTime,
@@ -147,21 +184,22 @@ class Payment(db.Model):
                      unique=False)
     card = db.Column(db.String(50),
                      nullable=False,
-                     unique=True)
+                     unique=False)
+ 
     
-class Calendar(db.Model):
-    "Calendar""."""
+"""class Calendar(db.Model):
+    ""Calendar.""
     __tablename__ = "calendars"
 
     calendarID = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    sessionID = db.Column(db.Integer,db.ForeignKey('sessions.sessionID'),nullable =False,)
     date = db.Column(db.DateTime, nullable =False,)
     status = db.Column(db.String(40),
                      nullable=False,
                      unique=False)
-    
+    session= db.relationship('Session',cascade='all,delete',backref='sessions')"""
+
 def connect_db(app):
     """Connect this database to provided Flask app.
 
