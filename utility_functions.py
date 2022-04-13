@@ -54,10 +54,9 @@ def validAppDayTime(data,therapApp):
                return True
     return False
 
-""" @app.route('/email') """
 def emailvalid(email):
- 
-    url="https://emailvalidation.abstractapi.com/v1/?api_key=a49173e3e1714867be55051bfed4815f&email="
+  """Get the user_api_key_value at https://www.abstractapi.com/email-verification-validation-api"""
+    url="https://emailvalidation.abstractapi.com/v1/?api_key=user_api_key_value&email="
     url=url+email
     response = requests.get(url,stream=True)
     dictdata = json.loads(response.content)
