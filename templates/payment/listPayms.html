@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% block body_class %}onboarding{% endblock %} {% block content %}
+
+
+<h2 class="join-message">List payments.</h2>
+<div class="table-responsive-sm">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Payment ID</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Concept</th>
+                <th>Card</th>
+            </tr>
+        </thead>
+        <tbody class="bg-light">
+            {% for elem in pay %}
+            <tr>
+                <td>{{elem.paymentID}}</td>
+                <td>{{elem.amount}}</td>
+                <td>{{elem.date}}</td>
+                <td>{{elem.concept}}</td>
+                <td>{{elem.card}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</div>
+
+{% for mesg in get_flashed_messages() %}
+<b>{{ mesg }}</b> {% endfor %}
+
+<a href="/patient" class="btn-primary btn-lg btn-block">Continue!</a>
+
+</div>
+
+
+{% endblock %}

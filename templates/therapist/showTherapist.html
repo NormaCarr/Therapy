@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% block body_class %}onboarding{% endblock %} {% block content %}
+
+<div class="row justify-content-md-center">
+
+
+
+    <form id="therapistShow_form">
+        <h2 class="my-3 p-2 bg-primary">Therapist information.</h2>
+        <div class="container p-3 my-3 bg-dark text-white">
+            {% for field in info %} {%if field == "Start_day" %}
+            <h4 class="my-3 p-2 bg-primary">Availability</h4>
+            {%endif%}
+            <h4>{{field}} : {{info[field]}}</h4>
+            {% endfor %}
+        </div>
+
+        <a href="/therapist" class="btn-primary btn-lg btn-block">Continue!</a>
+        <a href="/therapist/editTherapist" class="btn-primary btn-lg btn-block">Edit!</a>
+    </form>
+    {% for mesg in get_flashed_messages() %}
+    <b>{{ mesg }}</b> {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %} {% block body_class %}onboarding{% endblock %} {% block content %}
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <h5>Patient</h5>
+        </div>
+
+        <ul class="nav navbar-nav navbar-left">
+            <li class="active">
+
+            </li>
+            {% if not g.user %}
+            <div id="notUser" text-aling="rigth">
+                <h5 text-aling="rigth"><a href="/patient/signup">Create account</a></h5>
+                <h5 text-aling="rigth"><a href="/login">Log in</a></h5>
+            </div>
+            {% else %}
+            <li>
+                <a id="appoint" href="/patient/appoint">Appointment</a>
+            </li>
+            <li class="dropdown">
+                <a id="myBtn" class="dropbtn" style="color: rgb(179, 179, 7)">Account</a>
+                <div id="myDropdown" class="dropdown-content">
+                    <a href="/patient/payment" class="btn-primary btn-lg btn-block">Make a Payment</a>
+                    <a href="/patient/listPayments" class="btn-primary btn-lg btn-block">View Payments</a>
+
+                </div>
+            </li>
+
+            <li>
+                <a href="/calendar">calendar</a>
+            </li>
+
+            <li>
+                <a href="/patient/showPatient">{{g.user.username}}</a>
+
+            </li>
+
+            <li>
+                <a href="/logout">Log out</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<script>
+    /* myFunction toggles between adding and removing the show class, which is used to hide and show the dropdown content */
+    document.getElementById("myBtn").onmouseover = function() {
+        myFunction()
+    };
+
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+</script>
+{% endblock %}

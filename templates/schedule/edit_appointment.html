@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% block body_class %}onboarding{% endblock %} {% block content %}
+
+<div class="row justify-content-md-center">
+    <div class="col-md-6 col-lg-5 bg-secondary">
+        <h2 class="join-message">Appointment.</h2>
+        <div class="col justify-content-md-center">
+            <div class="row-8 bg-secondary">Therapist availavility<div>
+       
+            
+            <div class="row-8 bg-light">{{t_date[0].startDay}} to {{t_date[0].endDay}}</div>
+        
+        
+            <div class="row-8 bg-light">From {{t_date[0].startTime}} to {{t_date[0].endTime}} hrs</div>
+        
+        <form action="/patient/modify_appointment" id="appointment_form" method="POST">
+            <label for="day">Choose a day:</label>
+            <input type="date" id="start" name="day" value={{date[0]}} min={{date[1]}} max={{date[2]}}>
+
+            <br>
+            <label name="start_time">Start time</label>
+            <input type="time" name="start_time">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Save</button>
+            <a href="/patient" class="btn-primary btn-lg btn-block">Back</a>
+
+        </form>
+        {% for mesg in get_flashed_messages() %}
+        <b>{{ mesg }}</b> {% endfor %}
+    </div>
+</div>
+{% endblock %}

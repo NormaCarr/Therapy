@@ -1,0 +1,13 @@
+{% extends 'base.html' %} {% block body_class %}onboarding{% endblock %} {% block content %}
+
+<div class="row justify-content-md-center">
+    <div class="col-md-7 col-lg-5">
+        <h2 class="join-message">Availability Calendar.</h2>
+        <label for="day">Choose a day:</label>
+        <input type="date" id="start" name="day" value={date} min={date} max="12">
+        <a href="/patient" class="btn-primary btn-lg btn-block">Continue!</a>
+
+    </div>
+</div>
+
+{% endblock %}

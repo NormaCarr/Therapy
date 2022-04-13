@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% block body_class %}onboarding{% endblock %} {% block content %}
+
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div class="navbar-header">
+
+            <h5>Therapist </h5>
+
+        </div>
+        <ul id="patienth" class="nav navbar-nav navbar-right">
+            {% if not g.user %}
+            <!--<li><a href="/therapist/signup">Create an account</a></li>-->
+
+            <li><a href="/login">Log in</a></li>
+            {% else %}
+            <li><a href="/therapist/patientList">List Patients</a></li>
+            <li>
+
+                <a href="/therapist/showTherapist">{{g.user.username}}</a></li>
+
+            <li class="nav-justified"><a href="/logout">Log out</a></li>
+            {% endif %}
+
+
+        </ul>
+
+    </div>
+</nav>
+{% endblock %}

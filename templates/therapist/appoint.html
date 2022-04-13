@@ -1,0 +1,31 @@
+{% extends 'base.html' %} {% block body_class %}onboarding{% endblock %} {% block content %}
+
+<div class="row justify-content-md-center">
+    <div class="col-md-7 col-lg-5">
+        <h2 class="join-message">Patient's appointment.</h2>
+
+
+        <h4>
+            Day: {{appoint.day}} </h4>
+        <h4>Time: {{appoint.time}}</h4>
+        <h4>Status: {{appoint.status}}
+        </h4>
+        <form action="/therapist/statusAppointment/{{appoint.patientID}}" method="PUT">
+            <h4><label for="appoint_status" id="appoint_Status">Change appointment status</label>
+                <select name="appoint_status">
+            <option value="Confirm ">Confirm</option>
+            <option value="Cancel ">Cancel</option>
+            <option value="fulfilled ">Fulfilled</option>
+        </select></h4>
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Save</button>
+        </form>
+        <a href="/therapist " class="btn-primary btn-lg btn-block ">Continue!</a>
+
+    </div>
+</div>
+<script>
+    document.getElementById("appoint_status").onclick = function() {
+        appoint.status = elem
+    };
+</script>
+{% endblock %}

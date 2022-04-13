@@ -1,0 +1,42 @@
+{% extends 'base.html' %} {% block body_class %}onboarding{% endblock %} {% block content %}
+
+<div class="row justify-content-md-center">
+    <div class="col-md-7 col-lg-5">
+        <h2 class="join-message">Availability.</h2>
+
+        <form action="/therapist/availability" id="dayTime_form">
+
+            <label for="start_day">Choose a Start day:</label>
+            <select name="start_day">
+                   <option value="Monday">Monday</option>
+                   <option value="Tuesday">Tuesday</option>
+                   <option value="Wednesday">Wednesday</option>
+                   <option value="Thursday">Thursday</option>
+                   <option value="Friday">Friday</option>
+                   <option value="Saturday">Saturday</option>
+                   <option value="Sunday">Sunday</option>
+                </select><br>
+            <label for="end_day">Choose an End day:</label>
+            <select name="end_day">
+                   <option value="Monday">Monday</option>
+                   <option value="Tuesday">Tuesday</option>
+                   <option value="Wednesday">Wednesday</option>
+                   <option value="Thursday">Thursday</option>
+                   <option value="Friday">Friday</option>
+                   <option value="Saturday">Saturday</option>
+                   <option value="Sunday">Sunday</option>
+            </select>
+            <br>
+            <label name="start_time">Start time</label>
+            <input type="time" name="start_time" value="{{user.startTime}}">
+            <label name="end_time">End time</label>
+            <input type="time" name="end_time" value="{{user.endTime}}">
+
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Save</button>
+            <a href="/therapist" class="btn btn-primary btn-lg btn-block">Cancel!</a>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

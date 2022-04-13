@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!--square Payment sand box-->
+    <!-- <script src="https://sandbox.web.squarecdn.com/v2/square.js"></script> -->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/lumen/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Document</title>
+
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="/" class="navbar-brand">
+                    <img src="/static/logo.png" width="50" height="50" alt="logo">
+                    <span>Therapist Group</span>
+                </a>
+            </div>
+            <ul id="user" class="nav navbar-nav navbar-right">
+                {% if not g.user %}
+                <li><a id="user_therapist" href="/therapist">Therapist</a></li>
+                <li><a id="user_patient" href="/patient">Patient</a></li>
+                {% endif%}
+                <li>
+                    <p>Phone: 007-007-4029</p>
+                </li>
+                <li>
+                    <p>therapistGroup@businessurpass.com</p>
+                </li>
+
+        </div>
+    </nav>
+
+
+
+    <div class="container">
+        {% block content %} {% endblock %}
+    </div>
+    {% for mesg in get_flashed_messages() %}
+    <b>{{ mesg }}</b> {% endfor %}
+</body>
+
+</html>

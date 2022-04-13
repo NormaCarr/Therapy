@@ -1,0 +1,51 @@
+body {
+    background-color: #1cf5f5;
+}
+
+li,
+a:hover {
+    color: rgb(19, 148, 139);
+    padding: 10px;
+}
+
+p,
+h5 {
+    color: azure;
+    display: inline;
+    padding: 10px;
+}
+
+div a {
+    color: rgb(179, 179, 7);
+    font-size: large;
+    padding: 10px;
+}
+
+
+/* https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_onclick_dropdown*/
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #32f5eb;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 0px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: double;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #2acbf3;
+    color: black;
+}
+
+.show {
+    display: block;
+}

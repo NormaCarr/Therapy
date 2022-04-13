@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% block body_class %}onboarding{% endblock %} {% block content %}
+
+<div class="row justify-content-md-center">
+    <div class="col-md-7 col-lg-5">
+        <h2 class="my-3 p-2 bg-primary">List patients.</h2>
+
+        {% for elem in patient %}
+        <div class="container p-3 my-3 bg-dark text-white">
+
+            <a id="listP" class="btn btn-secondary " href="/therapist/patientInf/{{elem.patientID}}">{{elem.first_name}} {{elem.last_name}}</a>
+            <a href="/therapist/appoint/{{elem.patientID}}" class="btn btn-primary ">Appointment</a>
+            <a href="/therapist/patient_notes/{{elem.patientID}}" class="btn btn-primary ">Information</a></div> {% endfor %}
+
+        <a href="/therapist" class="btn-primary btn-lg btn-block">Continue!</a> {% with messages = get_flashed_messages() %} {% if messages %}
+        <div class=flashes>
+            {% for message in messages %}
+            <h6>{{ message }}</h6>
+            {% endfor %}
+        </div>
+        {% endif %} {% endwith %}
+    </div>
+</div>
+
+{% endblock %}

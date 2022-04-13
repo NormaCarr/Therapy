@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% block body_class %}onboarding{% endblock %} {% block content %}
+
+<div class="row justify-content-md-center">
+    <div class="col-md-7 col-lg-5">
+        <h3 class="p-1 my-1 bg-secondary">Patient information.</h3>
+        <div class="container p-3 my-3 bg-light text-body">
+
+
+            <form id="patient_form">
+                {% for field in info %}
+                <h4 id="patientInf">{{field}} : {{info[field]}}</h4> {% endfor %}
+
+
+
+        </div> <a href="/patient/editPatient" class="btn-primary btn-lg btn-block">Edit!</a>
+        <a href="/patient" class="btn-primary btn-lg btn-block">Continue!</a> {% for mesg in get_flashed_messages() %}
+        <b>{{ mesg }}</b> {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
