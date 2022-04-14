@@ -1,4 +1,4 @@
-##Therapist
+##TherapistGroup link:https://therapistt.herokuapp.com/
 
 To get this application running, make sure you do the following in the Terminal:
 
