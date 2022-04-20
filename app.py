@@ -1,14 +1,7 @@
-
-
 from datetime import datetime
-
 import os
-
 from flask import Flask, jsonify,render_template, request, flash, redirect, session, g
-#from flask_debugtoolbar import DebugToolbarExtension
-
 from sqlalchemy.exc import IntegrityError
-
 from utility_functions import verifyAccount,validateStartTime,currentDatetoArray,hideCardNumber,validAppDayTime,emailvalid
 from forms import  LoginForm, PaymentForm,TherapistAddForm,SignupAddForm, PatientAddForm
 from models import Payment, Schedule, db, connect_db, Therapist, Patient,User
@@ -39,29 +32,23 @@ db.create_all()
 @app.before_request
 def add_user_to_g():
     """If we're logged in, add curr user to Flask global."""
-
     if CURR_USER_KEY in session:
         g.user = User.query.get(session[CURR_USER_KEY])
-
     else:
         g.user = None
 
 def do_login(user):
     """Log in user."""
-
     session[CURR_USER_KEY] = user.userID
 
 def do_logout():
     """Logout user."""
-
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
-
 
 @app.route('/')
 def primero():
     return render_template('/base.html')
-
 
 @app.route('/therapist')
 def home_page_therapist():
@@ -71,26 +58,20 @@ def home_page_therapist():
 def home_page_patient():
     return render_template('/patient/patientHome.html')
 
-
 @app.route('/login', methods=["GET", "POST"])
 def login():
     """Handle user login."""
-
     form = LoginForm()
-
     if form.validate_on_submit():
         user = User.authenticate(form.username.data,
                                  form.password.data)
-
         if user:
             do_login(user)
             add_user_to_g()
             account=verifyAccount(user.userID)
             if account:
               return redirect(f"/{account}")
-
         flash("Invalid credentials.", 'danger')
-
     return render_template('/login.html', form=form)
 
 @app.route('/logout')
@@ -114,17 +95,12 @@ def calendary():
 @app.route('/patient/signup', methods=["GET", "POST"])
 def signupPatient():
     """Handle patient signup.
-
     Create new user patient and add to DB. Redirect to home page.
-
     If form not valid, present form.
-
     If the there already is a user with that username: flash message
     and re-present form.
     """
-
     form = SignupAddForm()
-    
     if form.validate_on_submit():
             if(emailvalid(form.username.data)=="DELIVERABLE"):    
                 try:
@@ -151,19 +127,15 @@ def patientInfo():
         flash("Access unauthorized.", "danger")
         return redirect("/patient")
     if form.validate_on_submit():
-         
             user=Patient(patientID=userID,first_name = form.first_name.data,
                          last_name = form.last_name.data,
-                        
                          phone = form.phone.data,
                          address = form.address.data,)
             db.session.add(user)
             db.session.commit()
-            return redirect(f"/patient/showPatient")
-           
+            return redirect(f"/patient/showPatient")       
     return render_template('/patient/patientInfo.html',form=form)
     
-
 @app.route('/patient/showPatient')
 def show_patient_inf():
     """Show patient's infromation"""  
@@ -173,34 +145,26 @@ def show_patient_inf():
     else:        
        flash("Access unauthorized.", "danger")
        return redirect("/patient")
-    
-
 
 @app.route('/patient/editPatient',methods=["GET","POST"])
 def edit_patient():
     """Update patien's information"""
     userID=g.user.userID
     user = Patient.query.filter_by(patientID=userID).first_or_404()
-   
     form=PatientAddForm(obj=user)
-
     if form.validate_on_submit():
-         
             user.first_name = form.first_name.data
             user.last_name = form.last_name.data
             user.phone = form.phone.data
             user.address = form.address.data
-            
             db.session.commit()
             return redirect(f"/patient/showPatient")
-           
     return render_template('/patient/editPatient.html',form=form)
 
 ###--------------------  Appoint  --------------------------------###
 
 @app.route('/patient/appoint')
 def appointmentHTML():
-    
     try:
         patSched=Schedule.query.filter_by(patientID=g.user.userID).first_or_404()
         return render_template('/schedule/appointment.html',appoint=patSched)
@@ -209,12 +173,10 @@ def appointmentHTML():
         therapApp=Therapist.query.all()
         return render_template('/schedule/new_appointment.html',date=date,t_date=therapApp)
     
-
 @app.route('/patient/new_appointment',methods=["POST"])
 def new_appointment():
     """the appointment is added"""
     user=g.user.userID
-    
     valDataApp=[request.form["day"],request.form["start_time"]]
     t_data=Therapist.query.all()
     valApp=validAppDayTime(valDataApp,t_data[0])
@@ -246,7 +208,6 @@ def modify_appoint():
        return redirect('/patient')
     flash("Date or time out of Therapist schedule", 'danger')      
     return redirect('/patient/editAppoint')
-
 
 @app.route('/patient/cancelAppoint',methods=["GET"])
 def cancel_appoint():
@@ -284,8 +245,7 @@ def payment():
     dt=datetime.now()
     date=str(dt.year)+'-'+str(dt.day)+'-'+str(dt.month)+' '+str(dt.hour)+':'+str(dt.minute)
     date = datetime.strptime(date, "%Y-%d-%m %H:%M")
-    card=hideCardNumber(str(form.card.data))
-    
+    card=hideCardNumber(str(form.card.data))    
     if form.validate_on_submit():
         pay=Payment(amount=form.amount.data,patientID=user,date=date,concept=form.concept.data,card=card,)    
         db.session.add(pay)
@@ -293,44 +253,34 @@ def payment():
         return redirect(f'/patient')
     return render_template('/payment/payment.html',form=form)
 
-""" @app.route('/patient/payment/card', methods=["POST","GET"])
-def paymentCard():
-    return render_template('/payment/card.html') """
+
 #####################  Therapist ######################################
 
 @app.route('/therapist/signup', methods=["GET", "POST"])
 def signuptherapist():
     """Handle therapist signup.
-
     Create new user therapist and add to DB. Redirect to home page.
-
     If form not valid, present form.
-
     If the there already is a user with that username: flash message
     and re-present form.
     """
-
     form = SignupAddForm()
-    
     if form.validate_on_submit():
         try:
             user = User.signup(
                 username=form.username.data,
                 password=form.password.data)
             db.session.commit() 
-            
         except IntegrityError:
             #db.session.rollback()
             flash("Email related to another account", 'danger')
             return render_template('/signup.html', form=form)
-        
         do_login(user)
         return redirect(f"/therapist/therapistInfo")
     return render_template('/signup.html', form=form)
 
 @app.route('/therapist/availability',methods=["GET","POST"])
 def availability(): 
-    
     user=Therapist.query.filter_by(therapistID=g.user.userID).first_or_404()
     if user:
       user.startDay=request.args.get("start_day")
@@ -343,29 +293,21 @@ def availability():
 @app.route('/therapist/therapistInfo', methods=["GET", "POST"])
 def therapistInfo():
     "Form to fill tharapist's information"
-   
     form=TherapistAddForm()    
-    
     if form.validate_on_submit():
-         
-            user=Therapist(therapistID=g.user.userID,first_name = form.first_name.data,
-                         last_name = form.last_name.data,
-                         phone = form.phone.data,
-                         address = form.address.data,
-                         speciality=form.speciality.data)
-            db.session.add(user)
-            db.session.commit()
-            return render_template('/therapist/availability.html',user=user)
-        
+        user=Therapist(therapistID=g.user.userID,first_name = form.first_name.data,
+        last_name = form.last_name.data,
+        phone = form.phone.data,
+        address = form.address.data,
+        speciality=form.speciality.data)
+        db.session.add(user)
+        db.session.commit()
+        return render_template('/therapist/availability.html',user=user)    
     return render_template('/therapist/therapistInfo.html',form=form)
 
 @app.route('/therapist/showTherapist')
 def show_therapist_inf():
-       
-
     user = Therapist.query.filter_by(therapistID=g.user.userID).first_or_404()
-    
-  
     return render_template('/therapist/showTherapist.html', info=user.to_dict())
 
 @app.route('/therapist/editTherapist',methods=["GET","POST"])
@@ -373,19 +315,14 @@ def edit_therapist():
     """Show therapist information and """
     user = Therapist.query.filter_by(therapistID=g.user.userID).first_or_404()
     form=TherapistAddForm(obj=user)
-
     if form.validate_on_submit():
-         
             user.first_name = form.first_name.data
             user.last_name = form.last_name.data
             user.phone = form.phone.data
             user.address = form.address.data
-            
             db.session.commit()
             return render_template('/therapist/availability.html',user=user)
-         
     return render_template('/therapist/editTherapist.html',form=form)
-
 
 @app.route("/therapist/patientList")
 def listPatients():
