@@ -91,10 +91,8 @@ class User(db.Model):
     @classmethod
     def signup(cls, username, password):
         """Sign up user patient.
-
         Hashes password and adds user to system.
         """
-
         hashed_pwd = bcrypt.generate_password_hash(password).decode('UTF-8')
 
         login = User(
@@ -126,21 +124,6 @@ class User(db.Model):
         return False
 
 
-"""class Session(db.Model):
-    ""Session.""
-    __tablename__ = "sessions"
-
-    sessionID = db.Column(db.Integer,
-                   primary_key=True,
-                   autoincrement=True)
-    
-    calendarID = db.Column(db.Integer,
-                   db.ForeignKey('calendars.calendarID'),nullable =False,)
-    status = db.Column(db.String(40),
-                     nullable=False,
-                     unique=False)
-   """                  
-    
 
 class Schedule(db.Model):
     """Schedule."""
@@ -164,7 +147,8 @@ class Schedule(db.Model):
     patient = db.relationship("Patient", back_populates="schedules")
     therapist = db.relationship("Therapist", back_populates="schedules")
     
-class Payment(db.Model):
+
+    class Payment(db.Model):
     """Payment."""
     __tablename__ = "payments"
 
@@ -186,25 +170,10 @@ class Payment(db.Model):
                      nullable=False,
                      unique=False)
  
-    
-"""class Calendar(db.Model):
-    ""Calendar.""
-    __tablename__ = "calendars"
-
-    calendarID = db.Column(db.Integer,
-                   primary_key=True,
-                   autoincrement=True)
-    date = db.Column(db.DateTime, nullable =False,)
-    status = db.Column(db.String(40),
-                     nullable=False,
-                     unique=False)
-    session= db.relationship('Session',cascade='all,delete',backref='sessions')"""
 
 def connect_db(app):
     """Connect this database to provided Flask app.
-
     You should call this in your Flask app.
     """
-
     db.app = app
     db.init_app(app)
