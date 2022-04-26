@@ -1,9 +1,10 @@
-##TherapistGroup link:https://therapistt.herokuapp.com/
+#Therapy
 
-To get this application running, make sure you do the following in the Terminal:
+-[TherapistGroup link:](https://therapistt.herokuapp.com/)
 
-Get the api_key for email validation <emailvalid(email)> at 
-    https://www.abstractapi.com/email-verification-validation-api
+##To get this application running, make sure you do the following in the Terminal:
+
+-Get the api_key for [email validation](https://www.abstractapi.com/email-verification-validation-api) to place in the function emailvalid(email)
 
 1. `python3 -m venv venv`
 2. `source venv/bin/activate`
@@ -11,7 +12,7 @@ Get the api_key for email validation <emailvalid(email)> at
 4. `createdb therapist` or run python therapist_seed.py
 5. `flask run`
 
-****************** Description *******************
+##**Description **
 
 This website will provide a friendly interface for managing therapies schedule and therapies fees payments.
 The app will manage a therapist's schedule and client's bill. The therapist has to set his availability days and hours. The client has to login or create an account to see the therapist’s schedule and select a time. Also, he needs to provide payment information with a credit or debit card. 
@@ -22,7 +23,7 @@ The application has a database with five tables.
 -- Another table with the patient schedule information, therapist id, patient id, day, time, frequency, status, and comment.
 -- Another table with the user’s login information, user id, username(email), and password.
 
-*******************  Routes  ***********************
+## ** Routes  **
 
 app.route('/')  
     ('/base.html')
@@ -31,7 +32,7 @@ app.route('/')
 /logout
 
 
-Thetapist
+### > Thetapist
 
 /therapist/therapistHome.html
 /therapist/signup',methods=["GET","POST"]
@@ -44,7 +45,7 @@ Thetapist
 /therapist/patientInf/<int:patient_id>
 
 
-Patient
+### > Patient
 
 /patient/patientHome.html
 /patient/signup',methods=["GET","POST"]
@@ -54,7 +55,7 @@ Patient
 /patient/editPatient',methods=["GET","POST"]
 
 
-Shedule
+### > Shedule
 
 /patient/appoint
 /patient/new_appointment',methods=["POST"]
@@ -64,14 +65,14 @@ Shedule
 /patient/modify_appointment', methods=["POST"]
 
 
-Payment
+### > Payment
 
 /patient/account
 /patient/listPayments
 /patient/payment', methods=["GET","POST"]
 
 
-***************     Files  ********************
+##  Files  
 
 - app.py is the main function, it contains the roots decorators, and python extensions calls 
 - requirements.txt has all the libraries that the app needs to run.
