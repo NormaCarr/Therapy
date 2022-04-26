@@ -32,7 +32,7 @@ app.route('/')
 /logout
 
 
-### > Thetapist
+### Thetapist
 
 /therapist/therapistHome.html
 /therapist/signup',methods=["GET","POST"]
@@ -45,7 +45,7 @@ app.route('/')
 /therapist/patientInf/<int:patient_id>
 
 
-### > Patient
+### Patient 
 
 /patient/patientHome.html
 /patient/signup',methods=["GET","POST"]
@@ -55,7 +55,7 @@ app.route('/')
 /patient/editPatient',methods=["GET","POST"]
 
 
-### > Shedule
+### Shedule
 
 /patient/appoint
 /patient/new_appointment',methods=["POST"]
@@ -65,14 +65,14 @@ app.route('/')
 /patient/modify_appointment', methods=["POST"]
 
 
-### > Payment
+### Payment
 
 /patient/account
 /patient/listPayments
 /patient/payment', methods=["GET","POST"]
 
 
-##  Files  
+##  ** Files ** 
 
 - app.py is the main function, it contains the roots decorators, and python extensions calls 
 - requirements.txt has all the libraries that the app needs to run.
