@@ -34,15 +34,15 @@ The application has a database with five tables.
 
 > ### Thetapist
 
->/therapist/therapistHome.html
->/therapist/signup',methods=["GET","POST"]
-/therapist/availability',methods=["GET","POST"]
-/therapist/therapistInfo',methods=["GET","POST"]
-/therapist/showTherapist
-/therapist/editTherapist',methods=["GET","POST"]
-/therapist/patientList
-/therapist/appoint/<int:patient_id>
-/therapist/patientInf/<int:patient_id>
+> > /therapist/therapistHome.html
+> > /therapist/signup',methods=["GET","POST"]
+> > /therapist/availability',methods=["GET","POST"]
+> > /therapist/therapistInfo',methods=["GET","POST"]
+> > /therapist/showTherapist
+> > /therapist/editTherapist',methods=["GET","POST"]
+> > /therapist/patientList
+> > /therapist/appoint/<int:patient_id>
+> > /therapist/patientInf/<int:patient_id>
 
 
 ### Patient 
