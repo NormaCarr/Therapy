@@ -45,9 +45,9 @@ The application has a database with five tables.
 > > /therapist/patientInf/<int:patient_id>
 
 
-### Patient 
+> ### Patient 
 
-/patient/patientHome.html
+> --/patient/patientHome.html
 /patient/signup',methods=["GET","POST"]
 /patient/patientInfo',methods=["GET","POST"]
 /patient/editPatient',methods=["GET","POST"]
@@ -55,7 +55,7 @@ The application has a database with five tables.
 /patient/editPatient',methods=["GET","POST"]
 
 
-### Shedule
+> ### Shedule
 
 /patient/appoint
 /patient/new_appointment',methods=["POST"]
@@ -65,7 +65,7 @@ The application has a database with five tables.
 /patient/modify_appointment', methods=["POST"]
 
 
-### Payment
+> ### Payment
 
 /patient/account
 /patient/listPayments
