@@ -35,7 +35,7 @@ The application has a database with five tables.
 > ### Thetapist
 
 >/therapist/therapistHome.html
-/therapist/signup',methods=["GET","POST"]
+>/therapist/signup',methods=["GET","POST"]
 /therapist/availability',methods=["GET","POST"]
 /therapist/therapistInfo',methods=["GET","POST"]
 /therapist/showTherapist
