@@ -1,4 +1,4 @@
-#Therapy
+# Therapy
 
 -[TherapistGroup link:](https://therapistt.herokuapp.com/)
 
@@ -12,7 +12,7 @@
 4. `createdb therapist` or run python therapist_seed.py
 5. `flask run`
 
-##**Description **
+## **Description **
 
 This website will provide a friendly interface for managing therapies schedule and therapies fees payments.
 The app will manage a therapist's schedule and client's bill. The therapist has to set his availability days and hours. The client has to login or create an account to see the therapist’s schedule and select a time. Also, he needs to provide payment information with a credit or debit card. 
