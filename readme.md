@@ -17,11 +17,11 @@
 This website will provide a friendly interface for managing therapies schedule and therapies fees payments.
 The app will manage a therapist's schedule and client's bill. The therapist has to set his availability days and hours. The client has to login or create an account to see the therapist’s schedule and select a time. Also, he needs to provide payment information with a credit or debit card. 
 The application has a database with five tables. 
--- One table with the therapist’s name, specialty, contact information, and office address. 
--- A table with the patient personal information, First name, last name,phone number, address.
--- Another table with payment information like patient id, amount, date, concept, and card. 
--- Another table with the patient schedule information, therapist id, patient id, day, time, frequency, status, and comment.
--- Another table with the user’s login information, user id, username(email), and password.
+- One table with the therapist’s name, specialty, contact information, and office address. 
+- A table with the patient personal information, First name, last name,phone number, address.
+- Another table with payment information like patient id, amount, date, concept, and card. 
+- Another table with the patient schedule information, therapist id, patient id, day, time, frequency, status, and comment.
+- Another table with the user’s login information, user id, username(email), and password.
 
 ## ** Routes  **
 
@@ -47,29 +47,29 @@ The application has a database with five tables.
 
 > ### Patient 
 
-> --/patient/patientHome.html
-/patient/signup',methods=["GET","POST"]
-/patient/patientInfo',methods=["GET","POST"]
-/patient/editPatient',methods=["GET","POST"]
-/patient/showPatient
-/patient/editPatient',methods=["GET","POST"]
+> > /patient/patientHome.html
+>>/patient/signup',methods=["GET","POST"]
+>>/patient/patientInfo',methods=["GET","POST"]
+>>/patient/editPatient',methods=["GET","POST"]
+>>/patient/showPatient
+>>/patient/editPatient',methods=["GET","POST"]
 
 
 > ### Shedule
 
-/patient/appoint
-/patient/new_appointment',methods=["POST"]
-/patient/editAppoint
-/patient/cancelAppoint',methods=["GET"]
-/patient/appointment',methods=["GET","POST"]
-/patient/modify_appointment', methods=["POST"]
+>>/patient/appoint
+>>/patient/new_appointment',methods=["POST"]
+>>/patient/editAppoint
+>>/patient/cancelAppoint',methods=["GET"]
+>>/patient/appointment',methods=["GET","POST"]
+>>/patient/modify_appointment', methods=["POST"]
 
 
 > ### Payment
 
-/patient/account
-/patient/listPayments
-/patient/payment', methods=["GET","POST"]
+>>/patient/account
+>>/patient/listPayments
+>>/patient/payment', methods=["GET","POST"]
 
 
 ##  ** Files ** 
