@@ -35,31 +35,34 @@ The application has a database with five tables.
 > ### Thetapist
 
 > > /therapist/therapistHome.html
-> > /therapist/signup',methods=["GET","POST"]
-> > /therapist/availability',methods=["GET","POST"]
-> > /therapist/therapistInfo',methods=["GET","POST"]
 > > /therapist/showTherapist
-> > /therapist/editTherapist',methods=["GET","POST"]
 > > /therapist/patientList
 > > /therapist/appoint/<int:patient_id>
 > > /therapist/patientInf/<int:patient_id>
+> > /therapist/signup',methods=["GET","POST"]
+> > /therapist/availability',methods=["GET","POST"]
+> > /therapist/therapistInfo',methods=["GET","POST"]
+> > /therapist/editTherapist',methods=["GET","POST"]
+
+
 
 
 > ### Patient 
 
 > > /patient/patientHome.html
+> > /patient/showPatient
 >>/patient/signup',methods=["GET","POST"]
 >>/patient/patientInfo',methods=["GET","POST"]
 >>/patient/editPatient',methods=["GET","POST"]
->>/patient/showPatient
+
 >>/patient/editPatient',methods=["GET","POST"]
 
 
 > ### Shedule
 
 >>/patient/appoint
->>/patient/new_appointment',methods=["POST"]
 >>/patient/editAppoint
+>>/patient/new_appointment',methods=["POST"]
 >>/patient/cancelAppoint',methods=["GET"]
 >>/patient/appointment',methods=["GET","POST"]
 >>/patient/modify_appointment', methods=["POST"]
