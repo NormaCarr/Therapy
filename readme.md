@@ -49,30 +49,30 @@ The application has a database with five tables.
 
 > ### Patient 
 
-> > /patient/patientHome.html
-> > /patient/showPatient
->>/patient/signup',methods=["GET","POST"]
->>/patient/patientInfo',methods=["GET","POST"]
->>/patient/editPatient',methods=["GET","POST"]
+> > - /patient/patientHome.html
+> > - /patient/showPatient
+>> - /patient/signup',methods=["GET","POST"]
+>> - /patient/patientInfo',methods=["GET","POST"]
+>> - /patient/editPatient',methods=["GET","POST"]
 
->>/patient/editPatient',methods=["GET","POST"]
+>> - /patient/editPatient',methods=["GET","POST"]
 
 
 > ### Shedule
 
->>/patient/appoint
->>/patient/editAppoint
->>/patient/new_appointment',methods=["POST"]
->>/patient/cancelAppoint',methods=["GET"]
->>/patient/appointment',methods=["GET","POST"]
->>/patient/modify_appointment', methods=["POST"]
+>> - /patient/appoint
+>> - /patient/editAppoint
+>> - /patient/new_appointment',methods=["POST"]
+>> - /patient/cancelAppoint',methods=["GET"]
+>> - /patient/appointment',methods=["GET","POST"]
+>> - /patient/modify_appointment', methods=["POST"]
 
 
 > ### Payment
 
->>/patient/account
->>/patient/listPayments
->>/patient/payment', methods=["GET","POST"]
+>> - /patient/account
+>> - /patient/listPayments
+>> - /patient/payment', methods=["GET","POST"]
 
 
 ##  ** Files ** 
