@@ -25,11 +25,11 @@ The application has a database with five tables.
 
 ## ** Routes  **
 
-> -app.route('/')  
+> - app.route('/')  
     ('/base.html')
 
-> -/login', methods=["GET","POST"]
-> -/logout
+> - /login', methods=["GET","POST"]
+> - /logout
 
 
 > ### Thetapist
