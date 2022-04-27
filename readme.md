@@ -54,7 +54,6 @@ The application has a database with five tables.
 >> - /patient/signup',methods=["GET","POST"]
 >> - /patient/patientInfo',methods=["GET","POST"]
 >> - /patient/editPatient',methods=["GET","POST"]
-
 >> - /patient/editPatient',methods=["GET","POST"]
 
 
