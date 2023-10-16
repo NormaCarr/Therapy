@@ -52,8 +52,9 @@ def do_login(user):
     session[CURR_USER_KEY] = user.userID
 
 def do_logout():
-    """Logout user."""
-
+    """Logout user."""   
+    
+    
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
 
